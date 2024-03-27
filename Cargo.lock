@@ -911,6 +911,7 @@ dependencies = [
  "color-eyre",
  "eyre",
  "futures",
+ "hs-hackathon-vision",
  "image",
  "imageproc",
  "log",

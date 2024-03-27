@@ -7,9 +7,9 @@ pub mod led_detector;
 pub mod preprocessor;
 pub mod utils;
 
-const RED: [u8; 4] = [255, 0, 0, 255];
-const BLUE: [u8; 4] = [0, 0, 255, 255];
-const GREEN: [u8; 4] = [0, 255, 0, 255];
+pub const RED: [u8; 4] = [255, 0, 0, 255];
+pub const BLUE: [u8; 4] = [0, 0, 255, 255];
+pub const GREEN: [u8; 4] = [0, 255, 0, 255];
 
 const WHITE: [u8; 4] = [255, 255, 255, 255];
 
