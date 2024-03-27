@@ -1,6 +1,6 @@
 [package]
 name = "hs-hackathon-drone"
-description = "A library for interfacing with the drones hardware and camera"
+description = "Drone camera support crate for Helsing's Rust Nation hackathon"
 version.workspace = true
 license.workspace = true
 edition.workspace = true

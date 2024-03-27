@@ -11,17 +11,8 @@ members = [
 version = "0.1.0"
 license = "Apache-2.0"
 edition = "2021"
-authors = [
-    "Jolyon Shah <jolyon.shah@helsing.ai>",
-    "Jon Gjengset <jon.gjengset@helsing.ai>",
-    "Cécile Allano-Chevalier <cecile.allano@helsing.ai>",
-    "Omar Essaid <omar.essaid@helsing.ai>",
-    "Conrad Edwards <conrad.edwards@helsing.ai>",
-    "Luke Tomlin <luke.tomlin@helsing.ai>",
-    "Mara Schulke <mara.schulke@helsing.ai>",
-]
-description = "An embedded computer vision hackathon"
-repository = "https://github.com/helsing-ai/hackathon"
+description = "An embedded + computer vision Rust Hackathon"
+repository = "https://github.com/helsing-ai/rust-nation"
 
 [workspace.dependencies]
 hs-hackathon-car = { version = "=0.1.0", path = "hs-hackathon-car" }
@@ -42,7 +33,6 @@ futures = "0.3"
 name = "hs-hackathon"
 readme = "README.md"
 description.workspace = true
-documentation = "https://github.com/helsing-ai/hackathon"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
@@ -65,7 +55,3 @@ futures.workspace = true
 image.workspace = true
 
 [dev-dependencies]
-
-[[example]]
-name = "full"
-path = "examples/full/main.rs"

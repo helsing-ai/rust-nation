@@ -1,6 +1,6 @@
 [package]
 name = "hs-hackathon-car"
-description = "A library for interfacing with the cars hardware"
+description = "Car control support crate for Helsing's Rust Nation hackathon"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
