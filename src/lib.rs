@@ -26,9 +26,5 @@ pub mod car {
 
 /// A computer vision api to detect LEDs inside of video frames recieved from drones
 pub mod vision {
-    pub use hs_hackathon_vision::{detect, distance};
-    pub use hs_hackathon_vision::{Color, Led, LedDetectionConfig};
+    pub use hs_hackathon_vision::{detect, distance, BoundingBox, Color, Led, LedDetectionConfig};
 }
-
-/// Cheats that you may use if you get stuck on a particular implementation detail
-pub mod cheats;
