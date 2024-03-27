@@ -944,7 +944,6 @@ version = "0.1.0"
 dependencies = [
  "crossterm",
  "eyre",
- "hs-hackathon-drone",
  "image",
  "imageproc",
  "log",

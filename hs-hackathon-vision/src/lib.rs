@@ -1,18 +1,15 @@
 pub(crate) mod raw;
 
-use hs_hackathon_drone::Frame;
-use image::DynamicImage;
-
 use crate::raw::distance::centroid_distance;
 use crate::raw::led_detector::get_leds;
+use image::DynamicImage;
 pub use raw::bounding_box::BoundingBox;
 pub use raw::colors::Color;
 pub use raw::led_detector::{Led, LedDetectionConfig};
 
 /// Detect all LEDs that are visible in a given frame
-pub fn detect(frame: &Frame, configuration: &LedDetectionConfig) -> eyre::Result<Vec<Led>> {
-    let dyn_image: DynamicImage = frame.0.clone().into();
-    get_leds(&dyn_image, configuration)
+pub fn detect(frame: &DynamicImage, configuration: &LedDetectionConfig) -> eyre::Result<Vec<Led>> {
+    get_leds(frame, configuration)
 }
 
 /// Get distance between two LEDs
