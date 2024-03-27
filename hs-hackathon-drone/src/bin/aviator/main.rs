@@ -160,7 +160,7 @@ async fn main() -> color_eyre::Result<()> {
                         info!("drone @ {h:03}cm, {bat:02}% battery");
                         every = Instant::now();
                     } else {
-                        debug!("drone @ {h:03}cm, {bat:02}% battery");
+                        trace!("drone @ {h:03}cm, {bat:02}% battery");
                     }
                     let mut drone = shared_state.drone.lock().await;
                     drone.battery = bat;
