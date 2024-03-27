@@ -5,7 +5,9 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
+use clap::Parser;
 use eyre::Context;
+use hs_hackathon_vision::{detect, draw_on_image, LedDetectionConfig};
 use image::{DynamicImage, RgbImage};
 use imageproc::drawing::draw_text_mut;
 use rusttype::{Font, Scale};
@@ -21,12 +23,10 @@ use tokio::{
     net::UdpSocket,
     sync::{mpsc, oneshot, watch, Mutex},
 };
-use tracing_core::LevelFilter;
-use tracing_subscriber::EnvFilter;
-
 #[allow(unused_imports)]
 use tracing::{debug, error, info, trace, warn};
-
+use tracing_core::LevelFilter;
+use tracing_subscriber::EnvFilter;
 mod raw;
 use raw::control::Command;
 use tracing::Instrument;
@@ -37,6 +37,7 @@ static FONT: OnceLock<Font<'static>> = OnceLock::new();
 struct AppState {
     camera: watch::Receiver<image::RgbImage>,
     drone: Mutex<Drone>,
+    led_config: LedDetectionConfig,
 }
 
 struct Drone {
@@ -47,8 +48,51 @@ struct Drone {
     task: mpsc::Sender<(Command, tokio::sync::oneshot::Sender<String>)>,
 }
 
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    /// resize width
+    #[arg(short, long, default_value_t = 800, required=false)]
+    width: u32,
+
+    /// resize height
+    #[arg(long, default_value_t = 800, required=false)]
+    height: u32,
+
+    /// brigthness threshold
+    #[arg(short, long, default_value_t = 10, required=false)]
+    threshold: u8,
+
+    /// Minimum width for a detected bounding box
+    #[arg(long, default_value_t = 7, required=false)]
+    min_size_width: u32,
+
+    /// Minimum height for a detected bounding box
+    #[arg(long, default_value_t = 7, required=false)]
+    min_size_height: u32,
+
+    /// Maximum width for a detected bounding box
+    #[arg(long, default_value_t = 20, required=false)]
+    max_size_width: u32,
+
+    /// Maximum width for a detected bounding box
+    #[arg(long, default_value_t = 20, required=false)]
+    max_size_height: u32,
+}
+
 #[tokio::main]
 async fn main() -> color_eyre::Result<()> {
+    let args = Args::parse();
+
+    let mut led_config = LedDetectionConfig::default();
+    led_config.threshold_value = args.threshold;
+    led_config.width = args.width;
+    led_config.height = args.height;
+    led_config.max_size = (args.max_size_width, args.max_size_height);
+    led_config.min_size = (args.min_size_width, args.min_size_height);
+
+    println!("Led configuration: {:?}", led_config);
+
     let filter = EnvFilter::builder()
         .with_default_directive(LevelFilter::DEBUG.into())
         .from_env()
@@ -69,6 +113,7 @@ async fn main() -> color_eyre::Result<()> {
     let shared_state = Arc::new(AppState {
         drone: Mutex::new(drone),
         camera: frame_rx,
+        led_config,
     });
 
     // spawn video capturer
@@ -278,6 +323,9 @@ async fn camera(
             &font,
             format!("Battery: {:02}%", bat).as_str(),
         );
+        let leds = detect(&dyn_image, &state.led_config)?;
+        leds.into_iter()
+            .for_each(|led| draw_on_image(&mut dyn_image, led));
     }
 
     let mut bytes = Cursor::new(Vec::new());
