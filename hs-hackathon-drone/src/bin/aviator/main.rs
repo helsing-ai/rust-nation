@@ -52,31 +52,31 @@ struct Drone {
 #[command(version, about, long_about = None)]
 struct Args {
     /// resize width
-    #[arg(short, long, default_value_t = 800, required=false)]
+    #[arg(short, long, default_value_t = 800, required = false)]
     width: u32,
 
     /// resize height
-    #[arg(long, default_value_t = 800, required=false)]
+    #[arg(long, default_value_t = 800, required = false)]
     height: u32,
 
     /// brigthness threshold
-    #[arg(short, long, default_value_t = 10, required=false)]
+    #[arg(short, long, default_value_t = 10, required = false)]
     threshold: u8,
 
     /// Minimum width for a detected bounding box
-    #[arg(long, default_value_t = 7, required=false)]
+    #[arg(long, default_value_t = 7, required = false)]
     min_size_width: u32,
 
     /// Minimum height for a detected bounding box
-    #[arg(long, default_value_t = 7, required=false)]
+    #[arg(long, default_value_t = 7, required = false)]
     min_size_height: u32,
 
     /// Maximum width for a detected bounding box
-    #[arg(long, default_value_t = 20, required=false)]
+    #[arg(long, default_value_t = 20, required = false)]
     max_size_width: u32,
 
     /// Maximum width for a detected bounding box
-    #[arg(long, default_value_t = 20, required=false)]
+    #[arg(long, default_value_t = 20, required = false)]
     max_size_height: u32,
 }
 
