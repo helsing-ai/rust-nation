@@ -1,33 +1,24 @@
 [workspace]
 members = [
     ".",
-    "hackathon-macros",
-    "hackathon-car",
-    "hackathon-drone",
-    "hackathon-vision",
+    "hs-hackathon-macros",
+    "hs-hackathon-car",
+    "hs-hackathon-drone",
+    "hs-hackathon-vision",
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.2"
 license = "Apache-2.0"
 edition = "2021"
-authors = [
-    "Jolyon Shah <jolyon.shah@helsing.ai>",
-    "Jon Gjengset <jon.gjengset@helsing.ai>",
-    "Cécile Allano-Chevalier <cecile.allano@helsing.ai>",
-    "Omar Essaid <omar.essaid@helsing.ai>",
-    "Conrad Edwards <conrad.edwards@helsing.ai>",
-    "Luke Tomlin <luke.tomlin@helsing.ai>",
-    "Mara Schulke <mara.schulke@helsing.ai>",
-]
-description = "An embedded computer vision hackathon"
-repository = "https://github.com/helsing-ai/hackathon"
+description = "An embedded + computer vision Rust Hackathon"
+repository = "https://github.com/helsing-ai/rust-nation"
 
 [workspace.dependencies]
-hackathon-car = { version = "=0.1.0", path = "hackathon-car" }
-hackathon-drone = { version = "=0.1.0", path = "hackathon-drone" }
-hackathon-vision = { version = "=0.1.0", path = "hackathon-vision" }
-hackathon-macros = { version = "=0.1.0", path = "hackathon-macros" }
+hs-hackathon-car = { version = "0.1.2", path = "hs-hackathon-car" }
+hs-hackathon-drone = { version = "0.1.2", path = "hs-hackathon-drone" }
+hs-hackathon-vision = { version = "0.1.2", path = "hs-hackathon-vision" }
+hs-hackathon-macros = { version = "0.1.2", path = "hs-hackathon-macros" }
 
 clap = { version = "4.0", features = ["derive"] }
 color-eyre = "0.6"
@@ -39,21 +30,19 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 futures = "0.3"
 
 [package]
-name = "hackathon"
+name = "hs-hackathon"
 readme = "README.md"
 description.workspace = true
-documentation = "https://github.com/helsing-ai/hackathon"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
-authors.workspace = true
 repository.workspace = true
 
 [dependencies]
-hackathon-car.workspace = true
-hackathon-drone.workspace = true
-hackathon-vision.workspace = true
-hackathon-macros.workspace = true
+hs-hackathon-car.workspace = true
+hs-hackathon-drone.workspace = true
+hs-hackathon-vision.workspace = true
+hs-hackathon-macros.workspace = true
 
 clap.workspace = true
 color-eyre.workspace = true
@@ -65,7 +54,3 @@ futures.workspace = true
 image.workspace = true
 
 [dev-dependencies]
-
-[[example]]
-name = "full"
-path = "examples/full/main.rs"
