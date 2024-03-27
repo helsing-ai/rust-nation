@@ -30,7 +30,7 @@ use tracing::{debug, error, info, trace, warn};
 mod raw;
 use raw::control::Command;
 
-pub const FONT_DATA: &[u8] = include_bytes!("../../../../resources/DejaVuSans.ttf");
+pub const FONT_DATA: &[u8] = include_bytes!("../../../DejaVuSans.ttf");
 static FONT: OnceLock<Font<'static>> = OnceLock::new();
 
 struct AppState {
