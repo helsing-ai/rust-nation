@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+
+# Usage message
+usage() {
+    echo "Usage: $0 <IP_ADDRESS>"
+    exit 1
+}
+
+# Check if an IP address is provided
+if [ $# -ne 1 ]; then
+    usage
+fi
+
+IP_ADDRESS="$1"
+
+# Validate the IP address format
+if ! [[ $IP_ADDRESS =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Error: Invalid IP address format."
+    exit 2
+fi
+
+rsync -av \
+--exclude='.git/' \
+--exclude='target' \
+--exclude='*.img' \
+--exclude='*.jpg' \
+--exclude '.direnv' \
+--exclude '.git*' \
+--exclude 'assets' \
+. nixos@$IP_ADDRESS:/tmp/rust-nation

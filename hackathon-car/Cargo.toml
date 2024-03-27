@@ -1,0 +1,21 @@
+[package]
+name = "hackathon-car"
+description = "A library for interfacing with the cars hardware"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+eyre.workspace = true
+lazy_static = "1"
+pwm-pca9685 = "0.2"
+i2cdev = "0.3.1"
+futures = "0.3"
+tokio.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+linux-embedded-hal = "0.3"
+sysfs_gpio = "0.5.0"
+rppal = { version = "0.11", features = ["hal"] }

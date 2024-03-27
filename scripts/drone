@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+./target/debug/drone takeoff
+sleep 5
+./target/debug/drone go-higher
+sleep 5
+./target/debug/drone go-higher
+sleep 5
+./target/debug/drone go-higher
+
+land() {
+	./target/debug/drone land
+	exit 0
+}
+
+trap land SIGINT
+
+while true
+do
+	./target/debug/drone query-battery
+	sleep 5
+done
+

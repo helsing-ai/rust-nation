@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+	echo "Usage: $0 <host> <command>"
+    echo "command:"
+    echo "  takeoff"
+    echo "  land"
+    echo "  left"
+    echo "  right"
+    echo "  forward"
+    echo "  backward"
+    echo "  up"
+    echo "  down"
+fi
+
+HOST="${1:-localhost}"
+
+curl http://$HOST:3000/nudge --json "\"$2\""

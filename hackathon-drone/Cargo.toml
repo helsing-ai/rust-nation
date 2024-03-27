@@ -1,0 +1,30 @@
+[package]
+name = "hackathon-drone"
+description = "A library for interfacing with the drones hardware and camera"
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+clap.workspace = true
+color-eyre.workspace = true
+eyre.workspace = true
+image = "0.24"
+imageproc = "0.23"
+openh264 = "0.4"
+rusttype = "0.9"
+tracing.workspace = true
+tracing-appender = "0.2"
+tracing-core = "0.1"
+tracing-subscriber.workspace = true
+sscanf = "0.4"
+strum = { version = "0.26", features = [ "derive" ] }
+serde = { version = "1", features = ["derive"] }
+tokio.workspace = true
+futures.workspace = true
+ratatui = "0.25.0"
+log = "0.4.20"
+axum = "0.7.5"
+reqwest = { version = "0.12.2", features = ["rustls-tls"], default-features = false }
