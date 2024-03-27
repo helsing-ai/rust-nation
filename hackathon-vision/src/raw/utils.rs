@@ -1,14 +1,12 @@
 use crate::raw::bounding_box::BoundingBox;
 use image::{DynamicImage, GenericImage, Rgba};
 
-pub fn draw_bounding_boxes(
+pub fn draw_bounding_box(
     img: &mut DynamicImage,
-    bboxes: Vec<BoundingBox>,
+    bbox: BoundingBox,
     border_color: Rgba<u8>,
 ) {
-    for bbox in &bboxes {
-        // Draw top and bottom border
-        if bbox.x_max() > bbox.x_min() {
+    if bbox.x_max() > bbox.x_min() {
             for x in bbox.x_min()..=bbox.x_max() {
                 img.put_pixel(x, bbox.y_min(), border_color); // Top border
                 img.put_pixel(x, bbox.y_max(), border_color); // Bottom border
@@ -22,6 +20,14 @@ pub fn draw_bounding_boxes(
                 img.put_pixel(bbox.x_max(), y, border_color); // Right border
             }
         }
+}
+pub fn draw_bounding_boxes(
+    img: &mut DynamicImage,
+    bboxes: Vec<BoundingBox>,
+    border_color: Rgba<u8>,
+) {
+    for bbox in bboxes {
+        draw_bounding_box(img, bbox, border_color)
     }
 }
 
