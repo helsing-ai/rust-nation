@@ -23,7 +23,7 @@ our hackathon and we are glad to have you onboard. Enjoy!
 
 - You are going to work in **teams of 3-4** people.
 - You may not move the drone outside of the enclosure
-- Connect to the `hs-rust-nation` wifi
+- Connect to the `hs-rust-nation` wifi - please ask for the password from one of the team.
 
 ## Challenge
 
@@ -52,20 +52,20 @@ and your computer vision algorithm.
 
 <br>
 
-The car is equipped with a raspberry pi that has access to the camera stream of
+The car is equipped with a Raspberry Pi that has access to the camera stream of
 the drone and the cars hardware (e.g. you can drive the car from the raspberry
 pi).
 
 Given the above setup and the libraries provided by helsing you should write
 the highlevel application logic to:
 
-- Identify your cars position
+- Identify your car's position
 - Identify the orientation of the car
 - Move the car into the color coded target area
 
-> Please Note: You are expected to develop this on your own laptop. Helsing
-> provides you libraries and deployment tooling, aswell as the drone and the
-> car, to make the above achievable in 60-90 minutes.
+> Please note: You are expected to develop this on your own laptop. Helsing
+> provides you libraries and deployment tooling, as well as the drone and the
+> car, to make the above achievable in 1-2 hours.
 
 ## Quickstart
 
@@ -85,20 +85,11 @@ $ rsync --exclude target -r . hack@<team>:/solution
 $ ssh hack@team
 ```
 
+> Having DNS issues? Try using `nmap` and use the car's IP directly. (`nmap -sP 192.168.50.0/24`)
+
 ## Positioning the drone
 
-### Installing `aviator`
+You need to position the drone yourself using `./scripts/aviate` (judging the FOV).
 
-```
-$ ssh hack@team "cargo instal --git github.com/helsing-ai/rust-nation --bin aviator
-$ aviator
-```
-
-### Using `aviator`
-
-To use aviator you should run it at all times at is takes care of managing your drone!
-
-You need to position the drone yourself (judging the FOV).
-
-You can open `http://<team>:3000/camera` to see the drones image and use
-`./scripts/aviate <team> <command>` to position it manually.
+You can open `http://<car-name>:3000/camera` to see the drones image and use
+`./scripts/aviate <car-name> <command>` to position it manually.
