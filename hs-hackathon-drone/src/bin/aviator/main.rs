@@ -324,8 +324,8 @@ async fn camera(
             format!("Battery: {:02}%", bat).as_str(),
         );
         let leds = detect(&dyn_image, &state.led_config)?;
-        leds.iter()
-            .for_each(|led| draw_on_image(&mut dyn_image, led.clone()));
+        leds.into_iter()
+            .for_each(|led| draw_on_image(&mut dyn_image, led));
     }
 
     let mut bytes = Cursor::new(Vec::new());
