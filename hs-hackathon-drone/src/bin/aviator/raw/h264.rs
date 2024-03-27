@@ -3,7 +3,9 @@ use image::RgbImage;
 use openh264::{decoder::Decoder, formats::YUVSource};
 use std::collections::VecDeque;
 use tokio::{net::UdpSocket, sync::watch};
-use tracing::{trace, warn};
+
+#[allow(unused_imports)]
+use tracing::{debug, info, trace, warn};
 
 const NAL_MIN_0_COUNT: usize = 2;
 
@@ -67,13 +69,18 @@ pub async fn watch_latest_frame(sink: watch::Sender<RgbImage>, socket: UdpSocket
 
     loop {
         // Write next packet into h264 byte stream buffer
+        trace!("await h264 packet");
         let size = socket.recv(packet_buffer.as_mut()).await?;
+        trace!("got h264 packet");
         h264_buffer.extend(&packet_buffer[0..size]);
 
         // Extract NAL units and decode them one by one into RGB frames.
         for packet in nal_units(&mut h264_buffer) {
+            trace!("walking nal unit");
             match decoder.decode(packet.as_slice()) {
                 Ok(Some(frame)) => {
+                    trace!("got frame");
+
                     let num_bytes = (frame.width() * frame.height() * 3) as usize;
                     if num_bytes > rgb_buffer.len() {
                         warn!(
@@ -89,6 +96,9 @@ pub async fn watch_latest_frame(sink: watch::Sender<RgbImage>, socket: UdpSocket
                             sized_rgb_buffer.to_vec(),
                         )
                         .expect("Size mismatch; this is a bug");
+
+                        trace!("updated frame");
+
                         if sink.send(image).is_err() {
                             warn!("exiting as there are no receivers");
                             return Ok(());
@@ -97,7 +107,7 @@ pub async fn watch_latest_frame(sink: watch::Sender<RgbImage>, socket: UdpSocket
                 }
                 Ok(None) => trace!("skipping empty NAL unit"),
                 Err(e) => {
-                    trace!("skipping packet h264 decoder is unhappy with: {e}")
+                    trace!(%e, "skipping packet h264 decoder is unhappy with")
                 }
             }
         }

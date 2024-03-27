@@ -11,6 +11,7 @@ pub struct Led {
     pub color: Color,
 }
 
+#[derive(Debug)]
 pub struct LedDetectionConfig {
     pub width: u32,
     pub height: u32,
