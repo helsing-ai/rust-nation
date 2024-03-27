@@ -15,7 +15,7 @@ pub fn main(_: TokenStream, input: TokenStream) -> TokenStream {
         #[::hs_hackathon::prelude::tokio::main]
         #sig {
             {
-                use hackathon::prelude::{tracing, tracing_subscriber};
+                use hs_hackathon::prelude::{tracing, tracing_subscriber};
                 use tracing::level_filters::LevelFilter;
                 use tracing_subscriber::EnvFilter;
 
@@ -42,18 +42,6 @@ pub fn main(_: TokenStream, input: TokenStream) -> TokenStream {
 
                     assert!(status.success(), "drone wifi systemd service has a unexpected status");
                     tracing::info!("network setup: success");
-                }
-
-                #[cfg(target_os = "linux")]
-                {
-                    // todo: verify car's hardware
-                    tracing::info!("hardware setup: success");
-                }
-
-                #[cfg(target_os = "linux")]
-                {
-                    // todo: verify deployability
-                    tracing::info!("deployment setup: success");
                 }
             }
 
