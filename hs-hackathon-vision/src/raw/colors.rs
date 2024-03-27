@@ -63,30 +63,26 @@ pub fn detect_color(img: &DynamicImage, bbox: &BoundingBox) -> Color {
 }
 
 fn get_color_lab(pixel: Rgba<u8>) -> Color {
-    if is_white(pixel) {
-        Color::White
-    } else {
-        let distances: Vec<(i32, Color)> = colors()
-            .iter()
-            .map(|color| {
-                let rgb = color.lab_rgb();
-                let s_pixel = to_srgb(pixel);
+    let distances: Vec<(i32, Color)> = colors()
+        .iter()
+        .map(|color| {
+            let rgb = color.lab_rgb();
+            let s_pixel = to_srgb(pixel);
 
-                let lab: Lab = Lab::from_color(s_pixel);
+            let lab: Lab = Lab::from_color(s_pixel);
 
-                // Compute euclidean distance
-                let distance = lab.distance_squared(rgb) as i32;
-                (distance, *color)
-            })
-            .collect();
-        // Minimum distance is the detected color
-        let min_distance = distances
-            .iter()
-            .min_by_key(|(distance, _)| *distance)
-            .expect("No maximum color found!");
+            // Compute euclidean distance
+            let distance = lab.distance_squared(rgb) as i32;
+            (distance, *color)
+        })
+        .collect();
+    // Minimum distance is the detected color
+    let min_distance = distances
+        .iter()
+        .min_by_key(|(distance, _)| *distance)
+        .expect("No maximum color found!");
 
-        min_distance.1
-    }
+    min_distance.1
 }
 
 fn to_srgb(pixel: Rgba<u8>) -> palette::rgb::Rgb {
