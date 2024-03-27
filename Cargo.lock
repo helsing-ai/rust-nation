@@ -838,100 +838,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hackathon"
-version = "0.1.0"
-dependencies = [
- "clap",
- "color-eyre",
- "eyre",
- "futures",
- "hackathon-car",
- "hackathon-drone",
- "hackathon-macros",
- "hackathon-vision",
- "image",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "hackathon-car"
-version = "0.1.0"
-dependencies = [
- "eyre",
- "futures",
- "i2cdev 0.3.2",
- "lazy_static",
- "linux-embedded-hal",
- "pwm-pca9685",
- "rppal",
- "sysfs_gpio 0.5.4",
- "tokio",
-]
-
-[[package]]
-name = "hackathon-drone"
-version = "0.1.0"
-dependencies = [
- "axum",
- "clap",
- "color-eyre",
- "eyre",
- "futures",
- "image",
- "imageproc",
- "log",
- "openh264",
- "ratatui",
- "reqwest",
- "rusttype",
- "serde",
- "sscanf",
- "strum 0.26.1",
- "tokio",
- "tracing",
- "tracing-appender",
- "tracing-core",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "hackathon-macros"
-version = "0.1.0"
-dependencies = [
- "lazy_static",
- "proc-macro2",
- "quote",
- "syn 2.0.52",
-]
-
-[[package]]
-name = "hackathon-vision"
-version = "0.1.0"
-dependencies = [
- "crossterm",
- "eyre",
- "hackathon-drone",
- "image",
- "imageproc",
- "log",
- "openh264",
- "palette",
- "ratatui",
- "rusttype",
- "sscanf",
- "strum 0.26.1",
- "tokio",
- "tracing",
- "tracing-appender",
- "tracing-core",
- "tracing-subscriber",
- "tui-logger",
- "unicode-width",
-]
-
-[[package]]
 name = "half"
 version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -962,6 +868,100 @@ name = "hermit-abi"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d231dfb89cfffdbc30e7fc41579ed6066ad03abda9e567ccafae602b97ec5024"
+
+[[package]]
+name = "hs-hackathon"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "color-eyre",
+ "eyre",
+ "futures",
+ "hs-hackathon-car",
+ "hs-hackathon-drone",
+ "hs-hackathon-macros",
+ "hs-hackathon-vision",
+ "image",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "hs-hackathon-car"
+version = "0.1.0"
+dependencies = [
+ "eyre",
+ "futures",
+ "i2cdev 0.3.2",
+ "lazy_static",
+ "linux-embedded-hal",
+ "pwm-pca9685",
+ "rppal",
+ "sysfs_gpio 0.5.4",
+ "tokio",
+]
+
+[[package]]
+name = "hs-hackathon-drone"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "clap",
+ "color-eyre",
+ "eyre",
+ "futures",
+ "image",
+ "imageproc",
+ "log",
+ "openh264",
+ "ratatui",
+ "reqwest",
+ "rusttype",
+ "serde",
+ "sscanf",
+ "strum 0.26.1",
+ "tokio",
+ "tracing",
+ "tracing-appender",
+ "tracing-core",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "hs-hackathon-macros"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.52",
+]
+
+[[package]]
+name = "hs-hackathon-vision"
+version = "0.1.0"
+dependencies = [
+ "crossterm",
+ "eyre",
+ "hs-hackathon-drone",
+ "image",
+ "imageproc",
+ "log",
+ "openh264",
+ "palette",
+ "ratatui",
+ "rusttype",
+ "sscanf",
+ "strum 0.26.1",
+ "tokio",
+ "tracing",
+ "tracing-appender",
+ "tracing-core",
+ "tracing-subscriber",
+ "tui-logger",
+ "unicode-width",
+]
 
 [[package]]
 name = "http"

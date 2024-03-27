@@ -1,5 +1,5 @@
 [package]
-name = "hackathon-macros"
+name = "hs-hackathon-macros"
 description = "Support macros for helsings rust nation hackathon"
 version.workspace = true
 license.workspace = true

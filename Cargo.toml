@@ -1,10 +1,10 @@
 [workspace]
 members = [
     ".",
-    "hackathon-macros",
-    "hackathon-car",
-    "hackathon-drone",
-    "hackathon-vision",
+    "hs-hackathon-macros",
+    "hs-hackathon-car",
+    "hs-hackathon-drone",
+    "hs-hackathon-vision",
 ]
 
 [workspace.package]
@@ -24,10 +24,10 @@ description = "An embedded computer vision hackathon"
 repository = "https://github.com/helsing-ai/hackathon"
 
 [workspace.dependencies]
-hackathon-car = { version = "=0.1.0", path = "hackathon-car" }
-hackathon-drone = { version = "=0.1.0", path = "hackathon-drone" }
-hackathon-vision = { version = "=0.1.0", path = "hackathon-vision" }
-hackathon-macros = { version = "=0.1.0", path = "hackathon-macros" }
+hs-hackathon-car = { version = "=0.1.0", path = "hs-hackathon-car" }
+hs-hackathon-drone = { version = "=0.1.0", path = "hs-hackathon-drone" }
+hs-hackathon-vision = { version = "=0.1.0", path = "hs-hackathon-vision" }
+hs-hackathon-macros = { version = "=0.1.0", path = "hs-hackathon-macros" }
 
 clap = { version = "4.0", features = ["derive"] }
 color-eyre = "0.6"
@@ -39,7 +39,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 futures = "0.3"
 
 [package]
-name = "hackathon"
+name = "hs-hackathon"
 readme = "README.md"
 description.workspace = true
 documentation = "https://github.com/helsing-ai/hackathon"
@@ -50,10 +50,10 @@ authors.workspace = true
 repository.workspace = true
 
 [dependencies]
-hackathon-car.workspace = true
-hackathon-drone.workspace = true
-hackathon-vision.workspace = true
-hackathon-macros.workspace = true
+hs-hackathon-car.workspace = true
+hs-hackathon-drone.workspace = true
+hs-hackathon-vision.workspace = true
+hs-hackathon-macros.workspace = true
 
 clap.workspace = true
 color-eyre.workspace = true

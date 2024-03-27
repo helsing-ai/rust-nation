@@ -1,5 +1,5 @@
 [package]
-name = "hackathon-car"
+name = "hs-hackathon-car"
 description = "A library for interfacing with the cars hardware"
 version.workspace = true
 license.workspace = true
