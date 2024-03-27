@@ -6,6 +6,7 @@ pub mod prelude {
     pub use crate::drone::*;
     pub use crate::vision::*;
 
+    pub use eyre;
     pub use futures;
     pub use futures::StreamExt;
     pub use tokio;
