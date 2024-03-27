@@ -3,7 +3,7 @@ pub(crate) mod raw;
 use crate::raw::distance::centroid_distance;
 use crate::raw::led_detector::get_leds;
 use crate::raw::utils::draw_bounding_box;
-use crate::raw::{BLUE, GREEN, RED};
+use crate::raw::{BLUE, GREEN, RED, WHITE};
 use image::{DynamicImage, Rgba};
 pub use raw::bounding_box::BoundingBox;
 pub use raw::colors::Color;
@@ -24,7 +24,7 @@ pub fn draw_on_image(image: &mut DynamicImage, led: Led) {
         Color::Red => RED,
         Color::Green => GREEN,
         Color::Blue => BLUE,
-        _ => panic!("Currently supported colours are red/blue/green"),
+        _ => WHITE,
     };
     draw_bounding_box(image, led.bbox, Rgba(color));
 }
