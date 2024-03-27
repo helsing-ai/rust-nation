@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use hackathon_car::{Angle, MotorSocket, Velocity, WheelOrientation};
-use hackathon_drone::Camera;
+use hs_hackathon_car::{Angle, MotorSocket, Velocity, WheelOrientation};
+use hs_hackathon_drone::Camera;
 
 use crate::cheats::positioning::distance;
 

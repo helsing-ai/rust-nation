@@ -1,0 +1,39 @@
+[aluminium]
+key = "goethe-simplex"
+drone = { ssid = "HT_ALUMINIUM", passphrase = "9aAGqT6YYz8p" }
+
+[titanium]
+key = "cornish-berries"
+drone = { ssid = "HT_TITANIUM", passphrase = "VGPrhChhqdpK" }
+
+[copper]
+key = "trump-guam"
+drone = { ssid = "HT_COPPER", passphrase = "4U3kmsHQv7at" }
+
+[iron]
+key = "topping-mares"
+drone = { ssid = "HT_IRON", passphrase = "ExDerkrWdDus" }
+
+[lead]
+key = "incline-raider"
+drone = { ssid = "HT_LEAD", passphrase = "5pvCSGhqRwJj" }
+
+[lithium]
+key = "purists-virgo"
+drone = { ssid = "HT_LITHIUM", passphrase = "DhtTe5U8EP2q" }
+
+[nickel]
+key = "moth-revolve"
+drone = { ssid = "HT_NICKEL", passphrase = "B7srCjjmKDf5" }
+
+[magnesium]
+key = "persia-refill"
+drone = { ssid = "HT_MAGNESIUM", passphrase = "qhWsJ2sghZ2n" }
+
+[zinc]
+key = "maniacs-easing"
+drone = { ssid = "HT_ZINC", passphrase = "spXQBfYERbNB" }
+
+[silver]
+key = "seagull-undone"
+drone = { ssid = "HT_SILVER", passphrase = "U5jACHzUVjPH" }

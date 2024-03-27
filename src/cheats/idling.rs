@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use hackathon_car::{MotorSocket, WheelOrientation};
-use hackathon_drone::Camera;
+use hs_hackathon_car::{MotorSocket, WheelOrientation};
+use hs_hackathon_drone::Camera;
 
 use super::TeamColors;
 use crate::cheats::positioning::distance;
@@ -19,7 +19,7 @@ pub async fn auto(
 ) -> eyre::Result<()> {
     // todo: set a sane default for determining whether we are
     // "on" the target
-    const SUCCESS_THRESHOLD: u32 = 100;
+    const SUCCESS_THRESHOLD: u32 = 50;
 
     'idle: loop {
         const IDLE_DURATION: Duration = Duration::from_secs(1);

@@ -1,6 +1,6 @@
 use super::TeamColors;
-use hackathon_drone::Camera;
-use hackathon_vision::{BoundingBox, LedDetectionConfig};
+use hs_hackathon_drone::Camera;
+use hs_hackathon_vision::{BoundingBox, LedDetectionConfig};
 
 /// A utility inference function
 #[doc(hidden)]

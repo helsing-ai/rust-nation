@@ -12,7 +12,7 @@ pub fn main(_: TokenStream, input: TokenStream) -> TokenStream {
     let block = main.block;
 
     quote! {
-        #[::hackathon::prelude::tokio::main]
+        #[::hs_hackathon::prelude::tokio::main]
         #sig {
             {
                 use hackathon::prelude::{tracing, tracing_subscriber};

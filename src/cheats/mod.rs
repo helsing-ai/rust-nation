@@ -1,4 +1,4 @@
-use hackathon_vision::Color;
+use hs_hackathon_vision::Color;
 
 /// Math utilities for doing angle calculations and determining the rotation need to get towards
 /// the target
@@ -6,9 +6,6 @@ pub mod angles;
 
 /// Utilities for positioning, distance calculations and conversion
 pub mod positioning;
-
-/// Algorithms for determining your car's orientation
-pub mod orientation;
 
 /// Turning algorithm for turning a car towards a specific angle
 pub mod turning;

@@ -1,4 +1,4 @@
-use hackathon_vision::BoundingBox;
+use hs_hackathon_vision::BoundingBox;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Position {

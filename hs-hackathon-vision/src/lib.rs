@@ -1,6 +1,6 @@
 pub(crate) mod raw;
 
-use hackathon_drone::Frame;
+use hs_hackathon_drone::Frame;
 use image::DynamicImage;
 
 use crate::raw::distance::centroid_distance;
