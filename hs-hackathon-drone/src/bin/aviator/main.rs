@@ -279,6 +279,8 @@ enum Direction {
     Backward,
     Up,
     Down,
+    Clockwise,
+    CounterClockwise,
 }
 
 struct Oof(StatusCode, String);
@@ -377,6 +379,8 @@ async fn nudge(
                 }
                 raw::control::Command::GoHigher
             }
+            Direction::Clockwise => raw::control::Command::RotateCw,
+            Direction::CounterClockwise => raw::control::Command::RotateCcw,
             Direction::Down => raw::control::Command::GoLower,
             Direction::Takeoff => raw::control::Command::Takeoff,
             Direction::Land => raw::control::Command::Land,
