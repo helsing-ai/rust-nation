@@ -15,7 +15,7 @@ use std::{
     io::Cursor,
     net::SocketAddr,
     sync::{Arc, OnceLock},
-    time::Duration,
+    time::{Duration, Instant},
 };
 use tokio::{
     net::UdpSocket,
@@ -29,6 +29,7 @@ use tracing::{debug, error, info, trace, warn};
 
 mod raw;
 use raw::control::Command;
+use tracing::Instrument;
 
 pub const FONT_DATA: &[u8] = include_bytes!("../../../DejaVuSans.ttf");
 static FONT: OnceLock<Font<'static>> = OnceLock::new();
@@ -71,50 +72,70 @@ async fn main() -> color_eyre::Result<()> {
     });
 
     // spawn video capturer
-    let vidcap = tokio::spawn(async move {
-        let recv_socket = UdpSocket::bind(SocketAddr::from((raw::VID_ADDR, raw::VID_PORT)))
-            .await
-            .wrap_err("bind to video receive socket")?;
-        raw::h264::watch_latest_frame(frame_tx, recv_socket)
-            .await
-            .wrap_err("watch for h264 frames")?;
-        Ok::<_, color_eyre::Report>(())
-    });
+    let vidcap = tokio::spawn(
+        async move {
+            let recv_socket = UdpSocket::bind(SocketAddr::from((raw::VID_ADDR, raw::VID_PORT)))
+                .await
+                .wrap_err("bind to video receive socket")?;
+            raw::h264::watch_latest_frame(frame_tx, recv_socket)
+                .await
+                .wrap_err("watch for h264 frames")?;
+            Ok::<_, color_eyre::Report>(())
+        }
+        .instrument(tracing::info_span!("video")),
+    );
     // spawn command dispatcher
     let dispatcher = tokio::spawn(async move {
-        raw::control::tokio::send_commands(command_rx)
+        raw::control::send_commands(command_rx)
+            .instrument(tracing::info_span!("command"))
             .await
             .wrap_err("open command loop")?;
         Ok::<_, color_eyre::Report>(())
     });
     // spawn state tracker
     let for_spawn = Arc::clone(&shared_state);
-    let tracker = tokio::spawn(async move {
-        let shared_state = for_spawn;
-        let socket = UdpSocket::bind(SocketAddr::from((raw::RCV_ADDR, raw::RCV_PORT)))
-            .await
-            .wrap_err("bind tracker")?;
-        let mut buffer = [0u8; 2000];
-        loop {
-            let size = socket.recv(&mut buffer).await.wrap_err("recv")?;
-            let received = String::from_utf8(buffer[0..size].to_vec())?;
-            if let Ok(raw::sensors::State { h, bat, .. }) = received.parse::<raw::sensors::State>()
-            {
-                let mut drone = shared_state.drone.lock().await;
-                drone.battery = bat;
-                drone.altitude = h;
-            } else {
-                warn!("Invalid drone state: {received}");
+    let tracker = tokio::spawn(
+        async move {
+            debug!("started");
+            let shared_state = for_spawn;
+            let socket = UdpSocket::bind(SocketAddr::from((raw::RCV_ADDR, raw::RCV_PORT)))
+                .await
+                .wrap_err("bind tracker")?;
+            let mut buffer = [0u8; 2000];
+            let mut every = Instant::now();
+            loop {
+                trace!("await update");
+                let size = socket.recv(&mut buffer).await.wrap_err("recv")?;
+                trace!("got update");
+                let received = String::from_utf8(buffer[0..size].to_vec())?;
+                if let Ok(raw::sensors::State { h, bat, .. }) =
+                    received.parse::<raw::sensors::State>()
+                {
+                    if every.elapsed() > Duration::from_secs(5) {
+                        info!("drone @ {h:03}cm, {bat:02}% battery");
+                        every = Instant::now();
+                    } else {
+                        debug!("drone @ {h:03}cm, {bat:02}% battery");
+                    }
+                    let mut drone = shared_state.drone.lock().await;
+                    drone.battery = bat;
+                    drone.altitude = h;
+                } else {
+                    warn!("Invalid drone state: {received}");
+                }
             }
+            #[allow(unreachable_code)]
+            Ok::<_, color_eyre::Report>(())
         }
-        #[allow(unreachable_code)]
-        Ok::<_, color_eyre::Report>(())
-    });
+        .instrument(tracing::info_span!("state")),
+    );
 
     // wait for sdk init to be acked
+    debug!("wait for sdk-init to complete");
     ack.await.wrap_err("ack sdk-init")?;
 
     // start the video stream
+    debug!("starting video stream");
     let (syn, ack) = oneshot::channel();
     {
         shared_state
@@ -127,44 +148,57 @@ async fn main() -> color_eyre::Result<()> {
     }
     ack.await.wrap_err("ack enable-stream")?;
 
+    info!("drone ready");
+
     // every 5 seconds, heartbeat
     let for_spawn = Arc::clone(&shared_state);
-    tokio::spawn(async move {
-        let shared_state = for_spawn;
-        loop {
-            tokio::time::sleep(Duration::from_secs(5)).await;
-            let (syn, ack) = oneshot::channel();
-            let drone = shared_state.drone.lock().await;
-            if let Err(e) = drone.task.try_send((Command::Stop, syn)) {
-                match e {
-                    mpsc::error::TrySendError::Closed(_) => {
-                        debug!("exiting since command channel is closed");
-                        // time to exit
-                        break Ok::<_, color_eyre::Report>(());
-                    }
-                    mpsc::error::TrySendError::Full(_) => {
-                        // fine -- means there are commands flowing
-                        continue;
+    tokio::spawn(
+        async move {
+            debug!("started");
+            let shared_state = for_spawn;
+            loop {
+                tokio::time::sleep(Duration::from_secs(5)).await;
+                debug!("thud");
+                let (syn, ack) = oneshot::channel();
+                let drone = shared_state.drone.lock().await;
+                if let Err(e) = drone.task.try_send((Command::Stop, syn)) {
+                    match e {
+                        mpsc::error::TrySendError::Closed(_) => {
+                            debug!("exiting since command channel is closed");
+                            // time to exit
+                            break Ok::<_, color_eyre::Report>(());
+                        }
+                        mpsc::error::TrySendError::Full(_) => {
+                            // fine -- means there are commands flowing
+                            trace!("skip");
+                            continue;
+                        }
                     }
                 }
+                drop(drone);
+                trace!("thud-ack");
+                ack.await.wrap_err("heartbeat")?;
+                trace!("wait");
             }
-            drop(drone);
-            ack.await.wrap_err("heartbeat")?;
         }
-    });
+        .instrument(tracing::info_span!("heartbeat")),
+    );
 
-    let server = tokio::spawn(async move {
-        let app = Router::new()
-            .route("/", get(root))
-            .route("/camera", get(camera))
-            .route("/nudge", post(nudge))
-            .with_state(shared_state);
+    let server = tokio::spawn(
+        async move {
+            let app = Router::new()
+                .route("/", get(root))
+                .route("/camera", get(camera))
+                .route("/nudge", post(nudge))
+                .with_state(shared_state);
 
-        let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
-        axum::serve(listener, app).await?;
-        #[allow(unreachable_code)]
-        Ok::<_, color_eyre::Report>(())
-    });
+            let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+            axum::serve(listener, app).await?;
+            #[allow(unreachable_code)]
+            Ok::<_, color_eyre::Report>(())
+        }
+        .instrument(tracing::info_span!("http")),
+    );
 
     match tokio::try_join!(vidcap, dispatcher, tracker, server) {
         Ok((vidcap, dispatcher, tracker, server)) => {
