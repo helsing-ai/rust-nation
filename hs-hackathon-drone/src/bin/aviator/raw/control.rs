@@ -1,7 +1,7 @@
 use crate::raw::{SND_ADDR, SND_PORT};
 use clap::Subcommand;
 use color_eyre::{eyre::WrapErr, Result};
-use std::net::SocketAddr;
+use std::{net::SocketAddr, time::Duration};
 use strum::Display;
 use tokio::net::UdpSocket;
 use tokio::sync::oneshot;
@@ -67,6 +67,11 @@ pub async fn send_commands(
     let mut buf = [0u8; 2000];
     loop {
         tokio::select! {
+            _ = tokio::time::sleep(Duration::from_secs(5)), if ack.is_some() => {
+                warn!("not getting ack from drone; is it on?");
+                // fail the pending operation
+                ack = None;
+            }
             res = socket.recv(&mut buf) => {
                 trace!("got ack");
 
