@@ -33,8 +33,8 @@ impl Default for LedDetectionConfig {
             radius_1: 4.0,
             radius_2: 8.0,
             threshold_value: 10,
-            min_size: (7, 7),
-            max_size: (20, 20),
+            min_size: (10, 10),
+            max_size: (40, 40),
         }
     }
 }
