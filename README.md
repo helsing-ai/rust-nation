@@ -81,7 +81,7 @@ a seamless deployment experience**
 ## Deploying
 
 ```
-$ rsync --exclude target -r . hack@<team>:solution
+$ rsync --exclude target -r ./ hack@<team>:/home/hack/
 $ ssh hack@<team>
 ```
 
