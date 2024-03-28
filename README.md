@@ -35,8 +35,8 @@ our hackathon and we are glad to have you onboard. Enjoy!
 
 <br>
 
-You and your team are resposible for writing an application that makes use of
-computer vision, distributed systems and networking to maneouver your teams car
+You and your team are responsible for writing an application that makes use of
+computer vision, distributed systems and networking to manoeuver your teams car
 (identified by the colored LED, in the example setup above: green) onto a color
 coded target (in the example setup above: blue).
 
@@ -75,7 +75,7 @@ a seamless deployment experience**
 
 - Form a team of 3-4 people and obtain your teams hardware from helsing staff.
 - Fork the repository and grant your team members access
-- Clone your teams repository and do a test deployment (to verify everythign works)
+- Clone your teams repository and do a test deployment (to verify everything works)
 - Start hacking!
 
 ## Deploying
