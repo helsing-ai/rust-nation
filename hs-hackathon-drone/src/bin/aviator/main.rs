@@ -401,5 +401,6 @@ async fn nudge(
             }
         }
         ack.await.wrap_err("ack cmd")?;
+        break Ok(());
     }
 }
