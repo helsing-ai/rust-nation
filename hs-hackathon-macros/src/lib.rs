@@ -27,7 +27,7 @@ pub fn main(_: TokenStream, input: TokenStream) -> TokenStream {
 
                 #[cfg(target_os = "linux")]
                 if cfg!(debug_assertions) {
-                    panic!("running in debug mode is not supported on the pi due to performance restirctions");
+                    panic!("running in debug mode is not supported on the pi due to performance restrictions");
                 }
 
                 #[cfg(target_os = "linux")]

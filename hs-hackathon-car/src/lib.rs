@@ -86,7 +86,7 @@ impl MotorSocket {
     ///
     /// Car will not move for longer than 1 second.
     pub async fn move_for(&mut self, velocity: Velocity, max_dur: Duration) -> eyre::Result<()> {
-        if let Some(left) = Duration::from_secs(10).checked_sub(self.cooldown_since.elapsed()) {
+        if let Some(left) = Duration::from_secs(3).checked_sub(self.cooldown_since.elapsed()) {
             tokio::time::sleep(left).await;
         }
         // -1 because we wired it backwards
