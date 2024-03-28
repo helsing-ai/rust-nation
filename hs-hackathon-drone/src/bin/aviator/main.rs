@@ -387,10 +387,11 @@ async fn nudge(
         };
 
         let (syn, ack) = tokio::sync::oneshot::channel();
-        if let Err(e) = current.task.try_send((invoke, syn)) {
+        if let Err(e) = current.task.try_send((invoke.clone(), syn)) {
             match e {
                 mpsc::error::TrySendError::Full(_) => {
                     // try again -- concurrent command
+                    warn!("dropping concurrent command {invoke}");
                     drop(current);
                     continue;
                 }
