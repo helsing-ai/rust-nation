@@ -64,10 +64,12 @@ pub async fn send_commands(
     debug!("connecting to: {}", &remote_addr);
 
     let mut ack: Option<oneshot::Sender<String>> = None;
+    let mut is_slow = false;
     let mut buf = [0u8; 2000];
     loop {
+        let wait = if is_slow { 30 } else { 7 };
         tokio::select! {
-            _ = tokio::time::sleep(Duration::from_secs(7)), if ack.is_some() => {
+            _ = tokio::time::sleep(Duration::from_secs(wait)), if ack.is_some() => {
                 warn!("not getting ack from drone; is it on?");
                 // fail the pending operation
                 ack = None;
@@ -100,6 +102,7 @@ pub async fn send_commands(
             cmd = src.recv() => {
                 if let Some((cmd, sink)) = cmd {
                     ack = Some(sink);
+                    is_slow =  cmd == Command::SDKInit || cmd == Command::Takeoff;
                     debug!("snd: {}", cmd);
                     socket.send_to(cmd.to_string().as_bytes(), remote_addr).await.wrap_err("send cmd")?;
                 } else {
