@@ -75,7 +75,7 @@ a seamless deployment experience**
 
 - Form a team of 3-4 people and obtain your team's hardware from helsing staff.
 - Fork the repository and grant your team members access
-- Clone your teams repository and do a test deployment (to verify everythign works)
+- Clone your teams repository and do a test deployment (to verify everything works)
 - Start hacking!
 - When you're ready to start driving the car, please ask and we'll connect the power supply.
 
@@ -115,7 +115,7 @@ A helsing staff member will provide you with your credentials
 ### I don't have access to the aviator (`http://<car-name>:3000`)..?
 
 - Check that the drone is on (touch the button on the side once)
-- Check that you have a `wlp1s0u1u2` interfance `ifconfig`
-- Wait until you get a ip from the drone on that interface using `watch ifconfig`
+- Check that you have a `wlp1s0u1u2` interface using `ifconfig`
+- Wait until you get a ipv4 from the drone on that interface using `watch ifconfig`
 - If that doesnt happen try `sudo systemctl restart drone-wifi`
 - Once you have the ip do a `sudo systemctl restart aviator`
