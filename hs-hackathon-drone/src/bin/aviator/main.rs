@@ -215,15 +215,19 @@ async fn main() -> color_eyre::Result<()> {
                         }
                         mpsc::error::TrySendError::Full(_) => {
                             // fine -- means there are commands flowing
-                            trace!("skip");
+                            debug!("skip");
                             continue;
                         }
                     }
                 }
                 drop(drone);
                 trace!("thud-ack");
-                ack.await.wrap_err("heartbeat")?;
-                trace!("wait");
+                // if a command fails to ack (eg, because drone shuts down),
+                // we don't want the heartbeat loop to stop!
+                match ack.await {
+                    Ok(s) => debug!("wait after {s}"),
+                    Err(_) => debug!("wait despite no ack"),
+                }
             }
         }
         .instrument(tracing::info_span!("heartbeat")),
