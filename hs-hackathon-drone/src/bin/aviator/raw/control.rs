@@ -67,7 +67,7 @@ pub async fn send_commands(
     let mut buf = [0u8; 2000];
     loop {
         tokio::select! {
-            _ = tokio::time::sleep(Duration::from_secs(5)), if ack.is_some() => {
+            _ = tokio::time::sleep(Duration::from_secs(7)), if ack.is_some() => {
                 warn!("not getting ack from drone; is it on?");
                 // fail the pending operation
                 ack = None;
