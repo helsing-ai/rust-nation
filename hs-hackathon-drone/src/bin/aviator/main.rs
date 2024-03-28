@@ -52,31 +52,31 @@ struct Drone {
 #[command(version, about, long_about = None)]
 struct Args {
     /// resize width
-    #[arg(short, long, default_value_t = 800, required=false)]
+    #[arg(short, long, default_value_t = 800, required = false)]
     width: u32,
 
     /// resize height
-    #[arg(long, default_value_t = 800, required=false)]
+    #[arg(long, default_value_t = 800, required = false)]
     height: u32,
 
     /// brigthness threshold
-    #[arg(short, long, default_value_t = 10, required=false)]
+    #[arg(short, long, default_value_t = 10, required = false)]
     threshold: u8,
 
     /// Minimum width for a detected bounding box
-    #[arg(long, default_value_t = 7, required=false)]
+    #[arg(long, default_value_t = 7, required = false)]
     min_size_width: u32,
 
     /// Minimum height for a detected bounding box
-    #[arg(long, default_value_t = 7, required=false)]
+    #[arg(long, default_value_t = 7, required = false)]
     min_size_height: u32,
 
     /// Maximum width for a detected bounding box
-    #[arg(long, default_value_t = 20, required=false)]
+    #[arg(long, default_value_t = 20, required = false)]
     max_size_width: u32,
 
     /// Maximum width for a detected bounding box
-    #[arg(long, default_value_t = 20, required=false)]
+    #[arg(long, default_value_t = 20, required = false)]
     max_size_height: u32,
 }
 
@@ -160,7 +160,7 @@ async fn main() -> color_eyre::Result<()> {
                         info!("drone @ {h:03}cm, {bat:02}% battery");
                         every = Instant::now();
                     } else {
-                        debug!("drone @ {h:03}cm, {bat:02}% battery");
+                        trace!("drone @ {h:03}cm, {bat:02}% battery");
                     }
                     let mut drone = shared_state.drone.lock().await;
                     drone.battery = bat;
@@ -279,6 +279,8 @@ enum Direction {
     Backward,
     Up,
     Down,
+    Clockwise,
+    CounterClockwise,
 }
 
 struct Oof(StatusCode, String);
@@ -377,6 +379,8 @@ async fn nudge(
                 }
                 raw::control::Command::GoHigher
             }
+            Direction::Clockwise => raw::control::Command::RotateCw,
+            Direction::CounterClockwise => raw::control::Command::RotateCcw,
             Direction::Down => raw::control::Command::GoLower,
             Direction::Takeoff => raw::control::Command::Takeoff,
             Direction::Land => raw::control::Command::Land,

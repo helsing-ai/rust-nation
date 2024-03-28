@@ -33,9 +33,9 @@ pub enum Command {
     TrimLeft,
     #[strum(to_string = "right 20")]
     TrimRight,
-    #[strum(to_string = "cw 30")]
+    #[strum(to_string = "cw 10")]
     RotateCw,
-    #[strum(to_string = "ccw 30")]
+    #[strum(to_string = "ccw 10")]
     RotateCcw,
     #[strum(to_string = "wifi {ssid} {pass}")]
     SetSsidPass {
