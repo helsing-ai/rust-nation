@@ -81,8 +81,8 @@ a seamless deployment experience**
 ## Deploying
 
 ```
-$ rsync --exclude target -r . hack@<team>:/solution
-$ ssh hack@team
+$ rsync --exclude target -r . hack@<team>:solution
+$ ssh hack@<team>
 ```
 
 > Having DNS issues? Try using `nmap` and use the car's IP directly. (`nmap -sP 192.168.50.0/24`)
@@ -93,3 +93,28 @@ You need to position the drone yourself using `./scripts/aviate` (judging the FO
 
 You can open `http://<car-name>:3000/camera` to see the drones image and use
 `./scripts/aviate <car-name> <command>` to position it manually.
+
+## FAQ / Trubleshooting
+
+### What is our team name?
+
+Your team name is determined by the drones label!
+
+### What is the ssh / sudo password?
+
+A helsing staff member will provide you with your credentials
+
+### I cant ssh into the car..?
+
+- Verify that the cars raspberry pi is on
+- You are on the `hs-rust-nation` network
+- Check that you can reach the car by `ping <team>`
+- If that doesnt work, try `nmap -sP 192.168.50.0/24` or ask helsing staff
+
+### I dont have access to the aviator (`http://<car-name>:3000`)..?
+
+- Check that the drone is on (touch the button on the side once)
+- Check that you have a `wlp1s0u1u2` interfance `ifconfig`
+- Wait until you get a ip from the drone on that interface using `watch ifconfig`
+- If that doesnt happen try `sudo systemctl restart drone-wifi`
+- Once you have the ip do a `sudo systemctl restart aviator`
