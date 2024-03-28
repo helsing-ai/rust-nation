@@ -39,7 +39,7 @@ impl ServoKit {
         let duty_cycle: u16 = (SERVO_MIN_PULSE as f32
             + (fraction * (SERVO_MAX_PULSE - SERVO_MIN_PULSE) as f32))
             as u16;
-        println!(
+        tracing::debug!(
             "Setting servo angle - angle: {angle}, fraction: {fraction}, duty_cycle: {duty_cycle}"
         );
         self.set_duty_cycle(pwm, duty_cycle)?;

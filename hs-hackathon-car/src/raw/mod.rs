@@ -39,7 +39,7 @@ pub fn init_motor_pwm(i2c: Option<I2cdev>) -> Result<Pca9685<I2cdev>, MotorError
 
     // The default address for the motor hat is 96 (0x60).
     let address = SlaveAddr::Alternative(true, false, false, false, false, false);
-    println!(
+    tracing::debug!(
         "Connecting to DC motor at address: {:#x?}",
         address.address()
     );
@@ -63,20 +63,20 @@ pub fn init_servo_pwm(i2c: Option<I2cdev>) -> Result<Pca9685<I2cdev>, MotorError
     };
 
     let address = SlaveAddr::Alternative(false, false, false, false, false, false); // 0x40
-    println!(
+    tracing::debug!(
         "Connecting to servo motor at address: {:#x?}",
         address.address()
     );
 
     let mut pwm = Pca9685::new(i2c, address);
-    println!("Enabling pwm");
+    tracing::debug!("Enabling pwm");
     pwm.enable().map_err(|_| MotorError::PwmError)?;
 
     // Calculate prescale value for 50Hz
     let osc_clock = 25_000_000; // 25 MHz
     let pwm_freq = 50; // 50 Hz
     let prescale_value = (osc_clock as f32 / (4096.0 * pwm_freq as f32)).round() as u8 - 1;
-    println!("Setting prescale to {}", prescale_value);
+    tracing::debug!("Setting prescale to {}", prescale_value);
     pwm.set_prescale(prescale_value)
         .map_err(|_| MotorError::PwmError)?;
 

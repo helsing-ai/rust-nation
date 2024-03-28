@@ -871,7 +871,7 @@ checksum = "d231dfb89cfffdbc30e7fc41579ed6066ad03abda9e567ccafae602b97ec5024"
 
 [[package]]
 name = "hs-hackathon"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "clap",
  "color-eyre",
@@ -889,7 +889,7 @@ dependencies = [
 
 [[package]]
 name = "hs-hackathon-car"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "eyre",
  "futures",
@@ -900,11 +900,12 @@ dependencies = [
  "rppal",
  "sysfs_gpio 0.5.4",
  "tokio",
+ "tracing",
 ]
 
 [[package]]
 name = "hs-hackathon-drone"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "axum",
  "clap",
@@ -931,7 +932,7 @@ dependencies = [
 
 [[package]]
 name = "hs-hackathon-macros"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "lazy_static",
  "proc-macro2",
@@ -941,7 +942,7 @@ dependencies = [
 
 [[package]]
 name = "hs-hackathon-vision"
-version = "0.1.2"
+version = "0.1.4"
 dependencies = [
  "crossterm",
  "eyre",
