@@ -28,4 +28,4 @@ ratatui = "0.25.0"
 log = "0.4.20"
 axum = "0.7.5"
 reqwest = { version = "0.12.2", features = ["rustls-tls"], default-features = false }
-hs-hackathon-vision.path = "../hs-hackathon-vision"
+hs-hackathon-vision.workspace = true
