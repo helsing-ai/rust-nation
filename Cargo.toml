@@ -15,10 +15,10 @@ description = "An embedded + computer vision Rust Hackathon"
 repository = "https://github.com/helsing-ai/rust-nation"
 
 [workspace.dependencies]
-hs-hackathon-car = { version = "0.1.3", path = "hs-hackathon-car" }
-hs-hackathon-drone = { version = "0.1.3", path = "hs-hackathon-drone" }
-hs-hackathon-vision = { version = "0.1.3", path = "hs-hackathon-vision" }
-hs-hackathon-macros = { version = "0.1.3", path = "hs-hackathon-macros" }
+hs-hackathon-car = { version = "0.1.4", path = "hs-hackathon-car" }
+hs-hackathon-drone = { version = "0.1.4", path = "hs-hackathon-drone" }
+hs-hackathon-vision = { version = "0.1.4", path = "hs-hackathon-vision" }
+hs-hackathon-macros = { version = "0.1.4", path = "hs-hackathon-macros" }
 
 clap = { version = "4.0", features = ["derive"] }
 color-eyre = "0.6"
