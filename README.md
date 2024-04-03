@@ -119,3 +119,6 @@ A helsing staff member will provide you with your credentials
 - Wait until you get a ipv4 from the drone on that interface using `watch ifconfig`
 - If that doesnt happen try `sudo systemctl restart drone-wifi`
 - Once you have the ip do a `sudo systemctl restart aviator`
+
+### License
+This project (including all source code and documentation) is available under the Apache-2 license.
